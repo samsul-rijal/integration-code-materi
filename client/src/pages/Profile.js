@@ -14,6 +14,8 @@ import imgBlank from "../assets/blank-profile.png";
 
 // Get API config here ...
 
+import {API} from '../config/api'
+
 export default function Profile() {
   const title = "Profile";
   document.title = "DumbMerch | " + title;
@@ -23,11 +25,41 @@ export default function Profile() {
   // Create Variabel for store profile data here ...
   // Create Variabel for store transactions data here ...
 
+  const [profile, setProfile] = useState({})
+  const [transactions, setTransactions] = useState([])
+
   // Create function get profile data by id from database here ...
   // Create function get transactions data from database here ...
+  const getProfile = async () => {
+    try {
+      
+      const response = await API.get("/profile")
+      setProfile(response.data.data)
+
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // Call function get product with useEffect didMount here ...
+  const getTransactions = async () => {
+    try {
+    
+      const response = await API.get("/transactions")
+      setTransactions(response.data.data)
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   // Call function get transactions with useEffect didMount here ...
+  useEffect(() => {
+    getProfile();
+    getTransactions();
+  }, [])
+
+  console.log(transactions);
 
   return (
     <>

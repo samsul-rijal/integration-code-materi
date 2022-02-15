@@ -11,14 +11,30 @@ import ProductCard from "../components/card/ProductCard";
 import imgEmpty from "../assets/empty.svg";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function Product() {
   const title = "Shop";
   document.title = "DumbMerch | " + title;
 
   // Create Variabel for store product data here ...
+  const [products, setProducts] = useState([]);
 
   // Create function get products data from database here ...
+  const getProducts = async () => {
+    try {
+      const response = await API.get("/products");
+      // Store product data to useState variabel
+      console.log(response.data)
+      setProducts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   // Call function get products with useEffect didMount here ...
 

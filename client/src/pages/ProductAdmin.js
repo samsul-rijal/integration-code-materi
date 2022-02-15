@@ -12,15 +12,29 @@ import imgEmpty from "../assets/empty.svg";
 import dataProduct from "../fakeData/product";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function ProductAdmin() {
   let history = useHistory();
 
   // Create Variabel for store product data here ...
+  const [products, setProducts] = useState([]);
 
   // Create function get products data from database here ...
+  const getProducts = async () => {
+    try {
+      const response = await API.get("/products");
+      // Store product data to useState variabel
+      console.log(response.data)
+      setProducts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // Call function get products with useEffect didMount here ...
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   const [product, setProduct] = useState(dataProduct);
   const [idDelete, setIdDelete] = useState(null);

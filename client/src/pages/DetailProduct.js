@@ -8,20 +8,67 @@ import Navbar from "../components/Navbar";
 import dataProduct from "../fakeData/product";
 
 // Get API config here ...
+import { API } from "../config/api";
+
 
 export default function DetailProduct() {
   let history = useHistory();
   let { id } = useParams();
 
   // Create Variabel for store product data here ...
+  const [product, setProduct] = useState({})
 
   // Create function get product data by id from database here ...
+  const getProduct = async (id) => {
+    try {
+
+        const response = await API.get('/product/' + id)
+
+        console.log(response.data.data);
+        setProduct(response.data.data)
+
+    } catch (error) {
+      console.log(error);      
+    }
+  }
 
   // Call function get product with useEffect didMount here ...
+  useEffect(() => {
+    getProduct(id)
+  }, [])
 
   
   // This step after fetching product detail data
   // Create handle buy process & insert transaction data to database here ...
+  const handleBuy = async (e) => {
+    try {
+      e.preventDefault();
+  
+      // Configuration
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+  
+      // Get data from product
+      const data = {
+        idProduct: product.id,
+        idSeller: product.user.id,
+        price: product.price,
+      };
+  
+      // Data body
+      const body = JSON.stringify(data);
+  
+      // Insert transaction data
+      await API.post("/transaction", body, config);
+  
+      history.push("/profile");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
