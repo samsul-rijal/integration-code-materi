@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 
 // Get API config here ...
+import {API} from '../../config/api'
 
 export default function Login() {
   let history = useHistory();
@@ -12,10 +13,15 @@ export default function Login() {
   document.title = "DumbMerch | " + title;
 
   const [state, dispatch] = useContext(UserContext);
+  console.log(state);
 
   const [message, setMessage] = useState(null);
   
   // Store data with useState here ...
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
   const { email, password } = form;
 
@@ -32,10 +38,18 @@ export default function Login() {
 
       // Create Configuration Content-type here ...
       // Content-type: application/json
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
 
       // Convert form data to string here ...
+      const body = JSON.stringify(form);
 
       // Insert data user for login process here ...
+      const response = await API.post("/login", body, config);
+      console.log(response.data)
 
       // Checking process
       if (response?.status == 200) {
