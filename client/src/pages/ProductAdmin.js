@@ -12,6 +12,7 @@ import imgEmpty from "../assets/empty.svg";
 import dataProduct from "../fakeData/product";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function ProductAdmin() {
   let history = useHistory();
@@ -23,8 +24,13 @@ export default function ProductAdmin() {
   const [products, setProducts] = useState([]);
 
   // Create variabel for id product and confirm delete data with useState here ...
+  const [idDelete, setIdDelete] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null)
 
   // Create init useState & function for handle show-hide modal confirm here ...
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // Get product data from database
   const getProducts = async () => {
@@ -50,11 +56,33 @@ export default function ProductAdmin() {
   };
 
   // Create function handle get id product & show modal confirm delete data here ...
+  const handleDelete = (id) => {
+    setIdDelete(id);
+    handleShow();
+  };
 
   // Create function for handle delete product here ...
   // If confirm is true, execute delete data
+  const deleteById = async (id) => {
+    try {
+      await API.delete(`/product/${id}`);
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Call function for handle close modal and execute delete data with useEffect here ...
+  useEffect(() => {
+    if (confirmDelete) {
+      // Close modal confirm delete data
+      handleClose();
+      // execute delete data by id function
+      deleteById(idDelete);
+      setConfirmDelete(null);
+    }
+  }, [confirmDelete]);
+
 
   return (
     <>
