@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import NavbarAdmin from "../components/NavbarAdmin";
 
 // Get API config here ...
+import {API} from '../config/api'
 
 export default function AddProductAdmin() {
   console.clear();
@@ -18,6 +19,13 @@ export default function AddProductAdmin() {
   const [preview, setPreview] = useState(null); //For image preview
 
   // Store data with useState here ...
+  const [form, setForm] = useState({
+    image: "",
+    name: "",
+    desc: "",
+    price: "",
+    qty: "",
+  });
 
   // Fetching category data
   const getCategories = async () => {
@@ -66,10 +74,23 @@ export default function AddProductAdmin() {
 
       // Create Configuration Content-type here ...
       // Content-type: multipart/form-data
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      };
 
       // Create store data with FormData as object here ...
+      const formData = new FormData()
+      formData.set("image", form.image[0], form.image[0].name)
+      formData.set("name", form.name)
+      formData.set("desc", form.desc)
+      formData.set("price", form.price)
+      formData.set("qty", form.qty)
 
       // Insert product data here ...
+      const response = await API.post('/product', formData, config)
+      console.log(response);
 
       history.push("/product-admin");
     } catch (error) {
