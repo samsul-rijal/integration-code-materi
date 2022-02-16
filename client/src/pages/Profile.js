@@ -13,8 +13,10 @@ import dataTransaction from "../fakeData/transaction";
 import imgBlank from "../assets/blank-profile.png";
 
 // Import useQuery here ...
+import { useQuery } from "react-query";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function Profile() {
   const title = "Profile";
@@ -25,8 +27,30 @@ export default function Profile() {
   const [state] = useContext(UserContext);
 
   // Create process for fetching profile data from database with useQuery here ...
+  let { data: profile, refetch } = useQuery("productsCache", async () => {
+    const config = {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + localStorage.token,
+      },
+    };
+    const response = await api.get("/profile", config);
+    return response.data;
+  });
+
 
   // Create process for fetching transactions data from database with useQuery here ...
+  let { data: transactions, transactionsRefetch } = useQuery("transactionsCache", async () => {
+    const config = {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + localStorage.token,
+      },
+    };
+    const response = await api.get("/transactions", config);
+    return response.data;
+  });
+
 
   return (
     <>

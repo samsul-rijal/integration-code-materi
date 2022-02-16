@@ -11,8 +11,10 @@ import ProductCard from "../components/card/ProductCard";
 import imgEmpty from "../assets/empty.svg";
 
 // Import useQuery here ...
+import { useQuery } from "react-query";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function Product() {
   let api = API();
@@ -21,6 +23,16 @@ export default function Product() {
   document.title = "DumbMerch | " + title;
 
   // Create process for fetching products data from database with useQuery here ...
+  let { data: products, refetch } = useQuery("productsCache", async () => {
+    const config = {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + localStorage.token,
+      },
+    };
+    const response = await api.get("/products", config);
+    return response.data;
+  });
 
   const breakpointColumnsObj = {
     default: 6,
