@@ -103,8 +103,8 @@ exports.getProduct = async (req, res) => {
 
 exports.addProduct = async (req, res) => {
   try {
-    let { categoryId } = req.body;
-    categoryId = categoryId.split(",");
+    // let { categoryId } = req.body;
+    // categoryId = categoryId.split(",");
 
     const data = {
       name: req.body.name,
@@ -117,11 +117,11 @@ exports.addProduct = async (req, res) => {
 
     let newProduct = await product.create(data);
 
-    const productCategoryData = categoryId.map((item) => {
-      return { idProduct: newProduct.id, idCategory: parseInt(item) };
-    });
+    // const productCategoryData = categoryId.map((item) => {
+    //   return { idProduct: newProduct.id, idCategory: parseInt(item) };
+    // });
 
-    await productCategory.bulkCreate(productCategoryData);
+    // await productCategory.bulkCreate(productCategoryData);
 
     let productData = await product.findOne({
       where: {
