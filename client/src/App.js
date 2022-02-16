@@ -8,7 +8,7 @@ import DetailProduct from "./pages/DetailProduct";
 import Complain from "./pages/Complain";
 import Profile from "./pages/Profile";
 import ComplainAdmin from "./pages/ComplainAdmin";
-import CategoryAdmin from "./pages/CategoryAdmin";
+// import CategoryAdmin from "./pages/CategoryAdmin";
 import ProductAdmin from "./pages/ProductAdmin";
 import UpdateCategoryAdmin from "./pages/UpdateCategoryAdmin";
 import AddCategoryAdmin from "./pages/AddCategoryAdmin";
@@ -80,7 +80,7 @@ function App() {
       <Route path="/complain" component={Complain} />
       <Route path="/profile" component={Profile} />
       <Route path="/complain-admin" component={ComplainAdmin} />
-      <Route path="/category-admin" component={CategoryAdmin} />
+      {/* <Route path="/category-admin" component={CategoryAdmin} /> */}
       <Route path="/edit-category/:id" component={UpdateCategoryAdmin} />
       <Route path="/add-category" component={AddCategoryAdmin} />
       <Route path="/product-admin" component={ProductAdmin} />

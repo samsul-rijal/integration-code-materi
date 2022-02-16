@@ -12,16 +12,22 @@ import imgEmpty from "../assets/empty.svg";
 import dataProduct from "../fakeData/product";
 
 // Import useQuery and useMutation here ...
+import { useQuery, useMutation } from "react-query";
 
 // Get API config here ...
+import { API } from "../config/api";
 
 export default function ProductAdmin() {
   let history = useHistory();
   let api = API();
 
   // Create variabel for delete product data with useState here ...
-
+  const [idDelete, setIdDelete] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
   // Init useState & function for handle show-hide modal confirm here ...
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false); 
+  const handleShow = () => setShow(true);
 
   const title = "Product admin";
   document.title = "DumbMerch | " + title;
@@ -47,11 +53,38 @@ export default function ProductAdmin() {
   };
 
   // Create function handle get product id & show modal confirm delete data here ...
+  const handleDelete = (id) => {
+    setIdDelete(id);
+    handleShow();
+  };
 
   // Create function for handle delete product with useMutation here ...
   // If confirm is true, execute delete data
+  const deleteById = useMutation(async (id) => {
+    try {
+      const config = {
+        method: "DELETE",
+        headers: {
+          Authorization: "Basic " + localStorage.token,
+        },
+      };
+      await api.delete(`/product/${id}`, config);
+      refetch();
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
   // Call function for handle close modal and execute delete data with useEffect here ...
+  useEffect(() => {
+    if (confirmDelete) {
+      // Close modal confirm delete data
+      handleClose();
+      // execute delete data by id function
+      deleteById.mutate(idDelete);
+      setConfirmDelete(null);
+    }
+  }, [confirmDelete]);
 
   return (
     <>
