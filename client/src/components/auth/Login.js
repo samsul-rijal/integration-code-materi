@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 
 import { API } from "../../config/api";
 
 export default function Login() {
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const title = "Login";
   document.title = "DumbMerch | " + title;
@@ -55,9 +55,9 @@ export default function Login() {
 
         // Status check
         if (response.data.data.status === "admin") {
-          history.push("/complain-admin");
+          navigate("/complain-admin");
         } else {
-          history.push("/");
+          navigate("/");
         }
 
         const alert = (

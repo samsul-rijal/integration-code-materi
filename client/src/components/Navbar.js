@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Container, Navbar as NavbarComp, Nav } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { UserContext } from "../context/userContext";
 
@@ -9,14 +9,14 @@ import ImgDumbMerch from "../assets/DumbMerch.png";
 export default function Navbar(props) {
   const [state, dispatch] = useContext(UserContext);
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const logout = () => {
     console.log(state);
     dispatch({
       type: "LOGOUT",
     });
-    history.push("/auth");
+    navigate("/auth");
   };
 
   return (

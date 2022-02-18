@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/userContext";
 
 import Auth from "./pages/Auth";
@@ -23,7 +23,7 @@ if (localStorage.token) {
 }
 
 function App() {
-  let history = useHistory();
+  let navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
   console.clear();
   console.log(state);
@@ -34,12 +34,12 @@ function App() {
 
     // Redirect Auth
     if (!state.isLogin) {
-      history.push("/auth");
+      navigate("/auth");
     } else {
       if (state.user.status === "admin") {
-        history.push("/product-admin");
+        navigate("/product-admin");
       } else if (state.user.status === "customer") {
-        history.push("/");
+        navigate("/");
       }
     }
   }, [state]);
@@ -75,20 +75,20 @@ function App() {
   }, []);
 
   return (
-    <Switch>
-      <Route exact path="/" component={Product} />
-      <Route path="/auth" component={Auth} />
-      <Route path="/product/:id" component={DetailProduct} />
-      <Route path="/complain" component={Complain} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/complain-admin" component={ComplainAdmin} />
-      <Route path="/category-admin" component={CategoryAdmin} />
-      <Route path="/update-category/:id" component={UpdateCategoryAdmin} />
-      <Route path="/add-category" component={AddCategoryAdmin} />
-      <Route path="/product-admin" component={ProductAdmin} />
-      <Route path="/add-product" component={AddProductAdmin} />
-      <Route path="/update-product/:id" component={UpdateProductAdmin} />
-    </Switch>
+    <Routes>
+      <Route exact path="/" element={<Product />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/product/:id" element={<DetailProduct />} />
+      <Route path="/complain" element={<Complain />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/complain-admin" element={<ComplainAdmin />} />
+      <Route path="/category-admin" element={<CategoryAdmin />} />
+      <Route path="/update-category/:id" element={<UpdateCategoryAdmin />} />
+      <Route path="/add-category" element={<AddCategoryAdmin />} />
+      <Route path="/product-admin" element={<ProductAdmin />} />
+      <Route path="/add-product" element={<AddProductAdmin />} />
+      <Route path="/update-product/:id" element={<UpdateProductAdmin />} />
+    </Routes>
   );
 }
 

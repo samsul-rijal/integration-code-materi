@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createElement } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useParams, useHistory } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 import NavbarAdmin from "../components/NavbarAdmin";
 import CheckBox from "../components/form/CheckBox";
@@ -13,7 +13,7 @@ export default function UpdateProductAdmin() {
   const title = "Product admin";
   document.title = "DumbMerch | " + title;
 
-  let history = useHistory();
+  let navigate = useNavigate();
   const { id } = useParams();
 
   const [categories, setCategories] = useState([]); //Store all category data
@@ -114,7 +114,7 @@ export default function UpdateProductAdmin() {
       const response = await API.patch("/product/" + product.id, formData, config);
       console.log(response.data);
 
-      history.push("/product-admin");
+      navigate("/product-admin");
     } catch (error) {
       console.log(error);
     }

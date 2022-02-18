@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { UserContext } from "../context/userContext";
 
@@ -10,13 +10,13 @@ import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 
 export default function Auth() {
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const [state] = useContext(UserContext);
 
   const checkAuth = () => {
     if (state.isLogin === true) {
-      history.push("/");
+      navigate("/");
     }
   };
   checkAuth();

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import NavbarAdmin from "../components/NavbarAdmin";
 
@@ -11,7 +11,7 @@ export default function AddProductAdmin() {
   const title = "Product admin";
   document.title = "DumbMerch | " + title;
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const [categories, setCategories] = useState([]); //Store all category data
   const [categoryId, setCategoryId] = useState([]); //Save the selected category id
@@ -91,7 +91,7 @@ export default function AddProductAdmin() {
       const response = await API.post("/product", formData, config);
       console.log(response);
 
-      history.push("/product-admin");
+      navigate("/product-admin");
     } catch (error) {
       console.log(error);
     }

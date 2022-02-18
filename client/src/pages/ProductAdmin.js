@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import ShowMoreText from "react-show-more-text";
 import rupiahFormat from "rupiah-format";
 
@@ -15,7 +15,7 @@ import dataProduct from "../fakeData/product";
 import { API } from "../config/api";
 
 export default function ProductAdmin() {
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const title = "Product admin";
   document.title = "DumbMerch | " + title;
@@ -48,11 +48,11 @@ export default function ProductAdmin() {
   }, []);
 
   const addProduct = () => {
-    history.push("/add-product");
+    navigate("/add-product");
   };
 
   const handleUpdate = (id) => {
-    history.push("/update-product/" + id);
+    navigate("/update-product/" + id);
   };
 
   // Create function handle get id product & show modal confirm delete data here ...

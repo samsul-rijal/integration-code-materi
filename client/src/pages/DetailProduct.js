@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import convertRupiah from "rupiah-format";
 
@@ -10,7 +10,7 @@ import dataProduct from "../fakeData/product";
 import { API } from "../config/api";
 
 export default function DetailProduct() {
-  let history = useHistory();
+  let navigate = useNavigate();
   let { id } = useParams();
 
   const [product, setProduct] = useState({});
@@ -54,7 +54,7 @@ export default function DetailProduct() {
       // Insert transaction data
       await API.post("/transaction", body, config);
 
-      history.push("/profile");
+      navigate("/profile");
     } catch (error) {
       console.log(error);
     }
